@@ -1,0 +1,229 @@
+/* ================================================
+   Navbar Styles — Premium Beauty Salon Navigation
+   ================================================ */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 18px 0;
+  transition: all var(--transition-normal);
+  background: transparent;
+}
+
+.navbar-scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-md);
+  padding: 10px 0;
+}
+
+.navbar-container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* --- Logo --- */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1001;
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logo-name {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--secondary);
+}
+
+.logo-sub {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  color: var(--primary);
+}
+
+/* Make logo text white when not scrolled (for hero pages) */
+.navbar:not(.navbar-scrolled) .logo-name {
+  color: white;
+}
+
+.navbar:not(.navbar-scrolled) .logo-sub {
+  color: var(--primary-light);
+}
+
+/* --- Nav Links --- */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link {
+  position: relative;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-body);
+  transition: var(--transition-normal);
+}
+
+.navbar:not(.navbar-scrolled) .nav-link {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.nav-link:hover {
+  color: var(--primary);
+}
+
+.navbar:not(.navbar-scrolled) .nav-link:hover {
+  color: white;
+}
+
+.nav-link.active {
+  color: var(--primary);
+}
+
+.navbar:not(.navbar-scrolled) .nav-link.active {
+  color: white;
+}
+
+.nav-link-underline {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+  transition: var(--transition-normal);
+}
+
+.nav-link:hover .nav-link-underline,
+.nav-link.active .nav-link-underline {
+  width: 60%;
+}
+
+/* --- CTA Button --- */
+.nav-cta-desktop {
+  padding: 10px 24px;
+  font-size: 0.85rem;
+}
+
+.nav-cta-mobile {
+  display: none;
+}
+
+/* --- Hamburger --- */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+}
+
+.hamburger-line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--secondary);
+  border-radius: 2px;
+  transition: var(--transition-normal);
+}
+
+.navbar:not(.navbar-scrolled) .hamburger-line {
+  background: white;
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* --- Mobile Responsive --- */
+@media (max-width: 900px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-cta-desktop {
+    display: none;
+  }
+
+  .navbar-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(26, 26, 46, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition-normal);
+  }
+
+  .navbar-links.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .navbar-links .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.2rem;
+    padding: 12px 24px;
+  }
+
+  .navbar-links .nav-link:hover,
+  .navbar-links .nav-link.active {
+    color: white;
+  }
+
+  .nav-cta-mobile {
+    display: block;
+    margin-top: 20px;
+  }
+
+  /* Keep hamburger visible even when scrolled on mobile */
+  .hamburger.active .hamburger-line {
+    background: white;
+  }
+}

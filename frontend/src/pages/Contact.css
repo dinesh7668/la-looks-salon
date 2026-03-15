@@ -1,0 +1,165 @@
+/* ================================================
+   Contact Page Styles
+   ================================================ */
+
+.contact-content {
+  padding: 60px 0 80px;
+  background: var(--bg-cream);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* --- Contact Cards --- */
+.contact-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.contact-card {
+  background: white;
+  padding: 28px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-normal);
+}
+
+.contact-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-light);
+}
+
+.contact-card-icon {
+  font-size: 2rem;
+  margin-bottom: 14px;
+  display: inline-block;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-extra-light);
+  border-radius: var(--radius-md);
+}
+
+.contact-card h3 {
+  font-size: 1.05rem;
+  color: var(--secondary);
+  margin-bottom: 10px;
+}
+
+.contact-card p {
+  font-size: 0.88rem;
+  color: var(--text-body);
+  line-height: 1.6;
+}
+
+.contact-phone a {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+  transition: var(--transition-normal);
+}
+
+.contact-phone a:hover {
+  color: var(--primary-dark);
+}
+
+.contact-card-link {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+  transition: var(--transition-normal);
+}
+
+.contact-card-link:hover {
+  color: var(--primary-dark);
+}
+
+.contact-note {
+  font-size: 0.82rem !important;
+  color: var(--text-light) !important;
+  margin-top: 8px;
+}
+
+/* --- Hours Table --- */
+.hours-table {
+  margin-top: 4px;
+}
+
+.hours-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 0.88rem;
+  color: var(--text-body);
+}
+
+.hours-time {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* --- Business Info --- */
+.business-info p {
+  margin-bottom: 6px;
+  font-size: 0.88rem;
+}
+
+.business-info strong {
+  color: var(--secondary);
+}
+
+/* --- Map --- */
+.contact-map-wrapper {
+  background: white;
+  padding: 28px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.map-title {
+  font-size: 1.2rem;
+  color: var(--secondary);
+  margin-bottom: 20px;
+}
+
+.map-container {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.map-btn {
+  width: 100%;
+  text-align: center;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-cards {
+    grid-template-columns: 1fr;
+  }
+}

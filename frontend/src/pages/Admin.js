@@ -1,0 +1,263 @@
+// -------------------------------------------------
+// Admin Page
+// View bookings and manage services
+// -------------------------------------------------
+
+import React, { useState, useEffect } from 'react';
+import {
+  getBookings,
+  getServices,
+  updateBookingStatus,
+  deleteBooking,
+  deleteService,
+} from '../services/api';
+import './Admin.css';
+
+function Admin() {
+  const [activeTab, setActiveTab] = useState('bookings');
+  const [bookings, setBookings] = useState([]);
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch data on mount and tab change
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        if (activeTab === 'bookings') {
+          const data = await getBookings();
+          setBookings(data);
+        } else {
+          const data = await getServices();
+          setServices(data);
+        }
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [activeTab]);
+
+  // Handle booking status update
+  const handleStatusChange = async (id, status) => {
+    try {
+      await updateBookingStatus(id, status);
+      setBookings(
+        bookings.map((b) => (b._id === id ? { ...b, status } : b))
+      );
+    } catch (err) {
+      alert('Error updating status');
+    }
+  };
+
+  // Handle booking deletion
+  const handleDeleteBooking = async (id) => {
+    if (window.confirm('Are you sure you want to delete this booking?')) {
+      try {
+        await deleteBooking(id);
+        setBookings(bookings.filter((b) => b._id !== id));
+      } catch (err) {
+        alert('Error deleting booking');
+      }
+    }
+  };
+
+  // Handle service deletion
+  const handleDeleteService = async (id) => {
+    if (window.confirm('Are you sure you want to delete this service?')) {
+      try {
+        await deleteService(id);
+        setServices(services.filter((s) => s._id !== id));
+      } catch (err) {
+        alert('Error deleting service');
+      }
+    }
+  };
+
+  // Format date for display
+  const formatDate = (dateStr) => {
+    return new Date(dateStr).toLocaleDateString('en-IN', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
+  };
+
+  // Status badge color
+  const statusColor = {
+    Pending: '#f59e0b',
+    Confirmed: '#22c55e',
+    Completed: '#3b82f6',
+    Cancelled: '#ef4444',
+  };
+
+  return (
+    <div className="admin-page" id="admin-page">
+      {/* Page Header */}
+      <section className="page-hero admin-hero">
+        <div className="page-hero-overlay"></div>
+        <div className="page-hero-content container">
+          <h1 className="page-hero-title">Admin Dashboard</h1>
+          <p className="page-hero-subtitle">
+            Manage your salon's bookings and services from one place.
+          </p>
+        </div>
+      </section>
+
+      {/* Admin Content */}
+      <section className="admin-content" id="admin-content">
+        <div className="container">
+          {/* Tab Navigation */}
+          <div className="admin-tabs" id="admin-tabs">
+            <button
+              className={`admin-tab ${activeTab === 'bookings' ? 'active' : ''}`}
+              onClick={() => setActiveTab('bookings')}
+              id="tab-bookings"
+            >
+              📋 Bookings ({bookings.length})
+            </button>
+            <button
+              className={`admin-tab ${activeTab === 'services' ? 'active' : ''}`}
+              onClick={() => setActiveTab('services')}
+              id="tab-services"
+            >
+              💆 Services ({services.length})
+            </button>
+          </div>
+
+          {loading ? (
+            <div className="loading-state">
+              <div className="loading-spinner"></div>
+              <p>Loading data...</p>
+            </div>
+          ) : (
+            <>
+              {/* ===== BOOKINGS TAB ===== */}
+              {activeTab === 'bookings' && (
+                <div className="admin-section" id="bookings-section">
+                  {bookings.length === 0 ? (
+                    <div className="empty-state">
+                      <span className="empty-icon">📋</span>
+                      <h3>No Bookings Yet</h3>
+                      <p>Bookings will appear here when customers make appointments.</p>
+                    </div>
+                  ) : (
+                    <div className="admin-table-wrapper">
+                      <table className="admin-table" id="bookings-table">
+                        <thead>
+                          <tr>
+                            <th>Customer</th>
+                            <th>Phone</th>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {bookings.map((booking) => (
+                            <tr key={booking._id}>
+                              <td className="td-name">{booking.customerName}</td>
+                              <td>{booking.phone}</td>
+                              <td>{booking.serviceName}</td>
+                              <td>{formatDate(booking.appointmentDate)}</td>
+                              <td>
+                                <span
+                                  className="status-badge"
+                                  style={{
+                                    background: `${statusColor[booking.status]}20`,
+                                    color: statusColor[booking.status],
+                                    borderColor: statusColor[booking.status],
+                                  }}
+                                >
+                                  {booking.status}
+                                </span>
+                              </td>
+                              <td className="td-actions">
+                                <select
+                                  className="status-select"
+                                  value={booking.status}
+                                  onChange={(e) =>
+                                    handleStatusChange(booking._id, e.target.value)
+                                  }
+                                >
+                                  <option value="Pending">Pending</option>
+                                  <option value="Confirmed">Confirmed</option>
+                                  <option value="Completed">Completed</option>
+                                  <option value="Cancelled">Cancelled</option>
+                                </select>
+                                <button
+                                  className="delete-btn"
+                                  onClick={() => handleDeleteBooking(booking._id)}
+                                  title="Delete booking"
+                                >
+                                  🗑️
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* ===== SERVICES TAB ===== */}
+              {activeTab === 'services' && (
+                <div className="admin-section" id="services-section">
+                  {services.length === 0 ? (
+                    <div className="empty-state">
+                      <span className="empty-icon">💆</span>
+                      <h3>No Services Found</h3>
+                      <p>Run the seed script to populate services.</p>
+                    </div>
+                  ) : (
+                    <div className="admin-table-wrapper">
+                      <table className="admin-table" id="services-table">
+                        <thead>
+                          <tr>
+                            <th>Icon</th>
+                            <th>Service Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Duration</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {services.map((service) => (
+                            <tr key={service._id}>
+                              <td className="td-icon">{service.image || '✨'}</td>
+                              <td className="td-name">{service.name}</td>
+                              <td>{service.category}</td>
+                              <td className="td-price">₹{service.price.toLocaleString()}</td>
+                              <td>{service.duration}</td>
+                              <td className="td-actions">
+                                <button
+                                  className="delete-btn"
+                                  onClick={() => handleDeleteService(service._id)}
+                                  title="Delete service"
+                                >
+                                  🗑️
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+export default Admin;

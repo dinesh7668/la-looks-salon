@@ -1,0 +1,252 @@
+/* ================================================
+   About Page Styles
+   ================================================ */
+
+/* --- Our Story Section --- */
+.about-story {
+  padding: var(--section-padding);
+  background: white;
+}
+
+.about-story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.about-heading {
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+  color: var(--secondary);
+}
+
+.about-hindi {
+  font-size: 1rem;
+  color: var(--primary);
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+
+.about-text {
+  font-size: 0.95rem;
+  color: var(--text-body);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.about-highlights {
+  display: flex;
+  gap: 30px;
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-light);
+}
+
+.highlight-item {
+  text-align: center;
+}
+
+.highlight-number {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.highlight-label {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* --- About Image --- */
+.about-story-image {
+  position: relative;
+}
+
+.about-img {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.about-img-badge {
+  position: absolute;
+  bottom: -20px;
+  left: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  padding: 16px 24px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+}
+
+.badge-icon {
+  font-size: 1.8rem;
+}
+
+.about-img-badge strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--secondary);
+}
+
+.about-img-badge span {
+  font-size: 0.78rem;
+  color: var(--text-light);
+}
+
+/* --- Mission Section --- */
+.about-mission {
+  padding: var(--section-padding);
+  background: var(--bg-cream);
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.mission-card {
+  background: white;
+  padding: 32px 24px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  border: 1px solid var(--border-light);
+  transition: var(--transition-slow);
+}
+
+.mission-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-light);
+}
+
+.mission-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.mission-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+  color: var(--secondary);
+}
+
+.mission-card p {
+  font-size: 0.88rem;
+  color: var(--text-body);
+  line-height: 1.6;
+}
+
+/* --- Why Choose Us --- */
+.about-why {
+  padding: var(--section-padding);
+  background: white;
+}
+
+.why-list {
+  max-width: 750px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.why-item {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  padding: 24px;
+  background: var(--bg-light);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  transition: var(--transition-normal);
+}
+
+.why-item:hover {
+  border-color: var(--primary-light);
+  transform: translateX(8px);
+}
+
+.why-number {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.why-item h4 {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin-bottom: 6px;
+}
+
+.why-item p {
+  font-size: 0.88rem;
+  color: var(--text-body);
+  line-height: 1.6;
+}
+
+/* --- About CTA --- */
+.about-cta {
+  padding: 70px 0;
+  background: var(--gradient-primary);
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .about-story-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .mission-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-highlights {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .mission-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-heading {
+    font-size: 1.7rem;
+  }
+
+  .about-img {
+    height: 300px;
+  }
+
+  .about-highlights {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+}
