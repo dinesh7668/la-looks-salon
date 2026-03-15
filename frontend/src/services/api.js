@@ -6,7 +6,7 @@
 import axios from 'axios';
 
 // Base URL for API — points to Express backend
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://la-looks-salon-backend.onrender.com/api';
 
 // Create axios instance with default config
 const api = axios.create({
