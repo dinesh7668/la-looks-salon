@@ -26,6 +26,7 @@ app.use(express.json());
 // ----- API Routes -----
 app.use('/api/services', require('./routes/serviceRoutes'));
 app.use('/api/bookings', require('./routes/bookingRoutes'));
+app.use('/api/auth', require('./routes/authRoutes'));
 
 // Root route — API health check
 app.get('/', (req, res) => {

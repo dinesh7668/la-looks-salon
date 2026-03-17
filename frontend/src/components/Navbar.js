@@ -35,8 +35,11 @@ function Navbar() {
     { path: '/contact', label: 'Contact' },
   ];
 
+  // Force solid navbar on Admin Login page (no dark hero banner there)
+  const isSolidNavbar = isScrolled || location.pathname === '/admin';
+
   return (
-    <nav className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`} id="main-navbar">
+    <nav className={`navbar ${isSolidNavbar ? 'navbar-scrolled' : ''}`} id="main-navbar">
       <div className="navbar-container">
         {/* Logo */}
         <Link to="/" className="navbar-logo" id="navbar-logo">
@@ -61,17 +64,33 @@ function Navbar() {
               </Link>
             </li>
           ))}
+          <li className="nav-cta-mobile" style={{ marginBottom: '10px' }}>
+            <Link to="/admin" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+              🔒 Admin Portal
+            </Link>
+          </li>
           <li className="nav-cta-mobile">
-            <Link to="/booking" className="btn btn-primary" id="nav-book-btn-mobile">
+            <Link to="/booking" className="btn btn-primary" id="nav-book-btn-mobile" onClick={() => setIsMenuOpen(false)}>
               Book Appointment
             </Link>
           </li>
         </ul>
 
         {/* CTA Button — Desktop */}
-        <Link to="/booking" className="btn btn-primary nav-cta-desktop" id="nav-book-btn">
-          Book Now
-        </Link>
+        <div className="nav-desktop-actions" style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+          <Link
+            to="/admin"
+            className="admin-btn-mini"
+            id="nav-admin-btn"
+            title="Admin Portal"
+            style={{ fontSize: '1.2rem', textDecoration: 'none' }}
+          >
+            🔒
+          </Link>
+          <Link to="/booking" className="btn btn-primary nav-cta-desktop" id="nav-book-btn">
+            Book Now
+          </Link>
+        </div>
 
         {/* Hamburger Menu — Mobile */}
         <button

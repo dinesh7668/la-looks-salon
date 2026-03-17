@@ -68,4 +68,10 @@ export const deleteBooking = async (id) => {
   return response.data;
 };
 
+// ===== Auth API Calls =====
+export const loginAdmin = async (credentials) => {
+  const response = await api.post('/auth/login', credentials);
+  return response.data;
+};
+
 export default api;

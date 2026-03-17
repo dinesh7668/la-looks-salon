@@ -4,6 +4,7 @@
 // -------------------------------------------------
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   getBookings,
   getServices,
@@ -18,6 +19,15 @@ function Admin() {
   const [bookings, setBookings] = useState([]);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  // Check authentication
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+      navigate('/admin');
+    }
+  }, [navigate]);
 
   // Fetch data on mount and tab change
   useEffect(() => {
@@ -93,6 +103,11 @@ function Admin() {
     Cancelled: '#ef4444',
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    navigate('/');
+  };
+
   return (
     <div className="admin-page" id="admin-page">
       {/* Page Header */}
@@ -103,6 +118,9 @@ function Admin() {
           <p className="page-hero-subtitle">
             Manage your salon's bookings and services from one place.
           </p>
+          <button className="btn btn-secondary" style={{ marginTop: '20px', backgroundColor: 'transparent', color: 'white', borderColor: 'white' }} onClick={handleLogout}>
+            Logout Dashboard
+          </button>
         </div>
       </section>
 

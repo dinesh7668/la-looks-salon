@@ -181,35 +181,46 @@
     display: flex;
   }
 
-  .nav-cta-desktop {
-    display: none;
+  .nav-cta-desktop,
+  .nav-desktop-actions {
+    display: none !important;
   }
 
   .navbar-links {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(26, 26, 46, 0.98);
-    backdrop-filter: blur(20px);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    width: 250px;
+    background: rgba(26, 26, 46, 0.75);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
     gap: 8px;
     opacity: 0;
     visibility: hidden;
-    transition: var(--transition-normal);
+    transform: translate(-50%, -20px) scale(0.95);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
   }
 
   .navbar-links.active {
     opacity: 1;
     visibility: visible;
+    transform: translate(-50%, 0) scale(1);
   }
 
   .navbar-links .nav-link {
     color: rgba(255, 255, 255, 0.8);
     font-size: 1.2rem;
-    padding: 12px 24px;
+    padding: 10px 16px;
+    display: block;
+    text-align: center;
+    width: 100%;
   }
 
   .navbar-links .nav-link:hover,
@@ -217,9 +228,15 @@
     color: white;
   }
 
+  .navbar-links li {
+    width: 100%;
+    text-align: center;
+  }
+
   .nav-cta-mobile {
-    display: block;
-    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
   }
 
   /* Keep hamburger visible even when scrolled on mobile */

@@ -12,12 +12,15 @@ import Services from './pages/Services';
 import Booking from './pages/Booking';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import AdminLogin from './pages/AdminLogin';
 import Admin from './pages/Admin';
+import ScrollToTop from './components/ScrollToTop';
 import './App.css';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="app">
         {/* Navigation Bar */}
         <Navbar />
@@ -30,7 +33,8 @@ function App() {
             <Route path="/booking" element={<Booking />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin" element={<AdminLogin />} />
+            <Route path="/admin/dashboard" element={<Admin />} />
           </Routes>
         </main>
 
