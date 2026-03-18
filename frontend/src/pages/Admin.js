@@ -11,6 +11,7 @@ import {
   updateBookingStatus,
   deleteBooking,
   deleteService,
+  createService,
 } from '../services/api';
 import './Admin.css';
 
@@ -19,6 +20,15 @@ function Admin() {
   const [bookings, setBookings] = useState([]);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newService, setNewService] = useState({
+    name: '',
+    category: '',
+    description: '',
+    price: '',
+    duration: '',
+    image: '',
+  });
   const navigate = useNavigate();
 
   // Check authentication
@@ -85,6 +95,33 @@ function Admin() {
       }
     }
   };
+
+  // Handle Add Service Submit
+  const handleAddService = async (e) => {
+    e.preventDefault();
+    try {
+      const added = await createService({
+        ...newService,
+        price: Number(newService.price),
+      });
+      setServices([...services, added]);
+      setNewService({
+        name: '',
+        category: '',
+        description: '',
+        price: '',
+        duration: '',
+        image: '',
+      });
+      setShowAddForm(false);
+      alert('Service added successfully');
+    } catch (err) {
+      alert('Error adding service');
+    }
+  };
+
+  // Unique categories for the datalist
+  const uniqueCategories = [...new Set(services.map(s => s.category))];
 
   // Format date for display
   const formatDate = (dateStr) => {
@@ -226,11 +263,104 @@ function Admin() {
               {/* ===== SERVICES TAB ===== */}
               {activeTab === 'services' && (
                 <div className="admin-section" id="services-section">
+                  <div className="header-actions">
+                    <h2>Manage Services</h2>
+                    <button 
+                      className="btn btn-primary" 
+                      onClick={() => setShowAddForm(!showAddForm)}
+                    >
+                      {showAddForm ? 'Cancel' : '+ Add New Service'}
+                    </button>
+                  </div>
+
+                  {showAddForm && (
+                    <div className="add-service-form">
+                      <h3>Add New Service</h3>
+                      <form onSubmit={handleAddService} className="form-grid">
+                        <div className="form-group">
+                          <label>Service Name</label>
+                          <input 
+                            type="text" 
+                            required 
+                            className="form-control" 
+                            value={newService.name}
+                            onChange={(e) => setNewService({ ...newService, name: e.target.value })}
+                            placeholder="e.g., Luxury Facial"
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label>Category (Choose existing or type new)</label>
+                          <input 
+                            list="category-options" 
+                            required 
+                            className="form-control" 
+                            value={newService.category}
+                            onChange={(e) => setNewService({ ...newService, category: e.target.value })}
+                            placeholder="e.g., Skincare"
+                          />
+                          <datalist id="category-options">
+                            {uniqueCategories.map((cat, idx) => (
+                              <option key={idx} value={cat} />
+                            ))}
+                          </datalist>
+                        </div>
+                        <div className="form-group full-width">
+                          <label>Description</label>
+                          <textarea 
+                            required 
+                            rows="3" 
+                            className="form-control" 
+                            value={newService.description}
+                            onChange={(e) => setNewService({ ...newService, description: e.target.value })}
+                            placeholder="Briefly describe the service..."
+                          ></textarea>
+                        </div>
+                        <div className="form-group">
+                          <label>Price (₹)</label>
+                          <input 
+                            type="number" 
+                            required 
+                            className="form-control" 
+                            value={newService.price}
+                            onChange={(e) => setNewService({ ...newService, price: e.target.value })}
+                            placeholder="e.g., 1500"
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label>Duration (e.g., 30 mins)</label>
+                          <input 
+                            type="text" 
+                            required 
+                            className="form-control" 
+                            value={newService.duration}
+                            onChange={(e) => setNewService({ ...newService, duration: e.target.value })}
+                            placeholder="e.g., 45 mins"
+                          />
+                        </div>
+                        <div className="form-group full-width">
+                          <label>Icon (Emoji or URL)</label>
+                          <input 
+                            type="text" 
+                            className="form-control" 
+                            value={newService.image}
+                            onChange={(e) => setNewService({ ...newService, image: e.target.value })}
+                            placeholder="e.g., ✨, ✂️, 💅"
+                          />
+                        </div>
+                        <div className="form-group full-width">
+                          <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '16px' }}>
+                            Save Service
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  )}
+
                   {services.length === 0 ? (
                     <div className="empty-state">
                       <span className="empty-icon">💆</span>
                       <h3>No Services Found</h3>
-                      <p>Run the seed script to populate services.</p>
+                      <p>Add a service using the button above.</p>
                     </div>
                   ) : (
                     <div className="admin-table-wrapper">
