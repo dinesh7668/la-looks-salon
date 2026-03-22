@@ -4,6 +4,7 @@
 // -------------------------------------------------
 
 const Booking = require('../models/Booking');
+const { sendSMS } = require('../utils/smsService');
 
 // @desc    Create a new booking
 // @route   POST /api/bookings
@@ -26,6 +27,12 @@ const createBooking = async (req, res) => {
     });
 
     const createdBooking = await booking.save();
+
+    // Send SMS Notification
+    const formattedDate = new Date(appointmentDate).toLocaleDateString('en-IN');
+    const message = `Hello ${customerName}, your booking request for ${serviceName} on ${formattedDate} has been received.`;
+    await sendSMS(phone, message);
+
     res.status(201).json(createdBooking);
   } catch (error) {
     res.status(400).json({ message: 'Invalid data: ' + error.message });
@@ -55,6 +62,20 @@ const updateBookingStatus = async (req, res) => {
     if (booking) {
       booking.status = req.body.status || booking.status;
       const updatedBooking = await booking.save();
+
+      let message = '';
+      if (booking.status === 'Confirmed') {
+        message = `Hello ${booking.customerName}, your booking has been CONFIRMED. See you soon!`;
+      } else if (booking.status === 'Completed') {
+        message = `Hello ${booking.customerName}, your service has been COMPLETED. Thank you for visiting!`;
+      } else if (booking.status === 'Rejected') {
+        message = `Hello ${booking.customerName}, your booking request has been REJECTED. Please contact us for more info.`;
+      }
+
+      if (message) {
+        await sendSMS(booking.phone, message);
+      }
+
       res.json(updatedBooking);
     } else {
       res.status(404).json({ message: 'Booking not found' });

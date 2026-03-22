@@ -94,7 +94,7 @@ function BookingForm({ preSelectedServiceId, preSelectedServiceName }) {
         appointmentDate: '',
       });
     } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong. Please try again.');
+      setError('Failed to send request');
     } finally {
       setLoading(false);
     }
@@ -115,8 +115,7 @@ function BookingForm({ preSelectedServiceId, preSelectedServiceName }) {
         <div className="form-message form-success" id="booking-success-msg">
           <span className="message-icon">✅</span>
           <div>
-            <strong>Booking Confirmed!</strong>
-            <p>Thank you for choosing LA Looks Salon. We'll see you soon!</p>
+            <strong>Your request has been sent successfully!</strong>
           </div>
         </div>
       )}

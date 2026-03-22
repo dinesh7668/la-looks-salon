@@ -67,6 +67,14 @@ function Admin() {
       setBookings(
         bookings.map((b) => (b._id === id ? { ...b, status } : b))
       );
+      
+      if (status === 'Confirmed') {
+        alert('Booking confirmed successfully!');
+      } else if (status === 'Completed') {
+        alert('Booking completed successfully!');
+      } else if (status === 'Rejected') {
+        alert('Booking rejected successfully!');
+      }
     } catch (err) {
       alert('Error updating status');
     }
@@ -137,7 +145,7 @@ function Admin() {
     Pending: '#f59e0b',
     Confirmed: '#22c55e',
     Completed: '#3b82f6',
-    Cancelled: '#ef4444',
+    Rejected: '#ef4444',
   };
 
   const handleLogout = () => {
@@ -241,7 +249,7 @@ function Admin() {
                                   <option value="Pending">Pending</option>
                                   <option value="Confirmed">Confirmed</option>
                                   <option value="Completed">Completed</option>
-                                  <option value="Cancelled">Cancelled</option>
+                                  <option value="Rejected">Rejected</option>
                                 </select>
                                 <button
                                   className="delete-btn"
