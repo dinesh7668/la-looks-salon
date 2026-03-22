@@ -15,12 +15,14 @@ import Contact from './pages/Contact';
 import AdminLogin from './pages/AdminLogin';
 import Admin from './pages/Admin';
 import ScrollToTop from './components/ScrollToTop';
+import { Toaster } from 'react-hot-toast';
 import './App.css';
 
 function App() {
   return (
     <Router>
       <ScrollToTop />
+      <Toaster position="top-right" />
       <div className="app">
         {/* Navigation Bar */}
         <Navbar />

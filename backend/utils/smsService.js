@@ -26,6 +26,11 @@ const sendSMS = async (phone, message) => {
     );
     return response.data;
   } catch (error) {
+    if (error.response) {
+      console.log('Fast2SMS Error Response:', JSON.stringify(error.response.data));
+    } else {
+      console.log('Fast2SMS Error Message:', error.message);
+    }
     console.log("SMS fallback:", message);
     return null;
   }

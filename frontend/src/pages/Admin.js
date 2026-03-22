@@ -13,6 +13,7 @@ import {
   deleteService,
   createService,
 } from '../services/api';
+import toast from 'react-hot-toast';
 import './Admin.css';
 
 function Admin() {
@@ -69,14 +70,14 @@ function Admin() {
       );
       
       if (status === 'Confirmed') {
-        alert('Booking confirmed successfully!');
+        toast.success('Booking confirmed successfully!');
       } else if (status === 'Completed') {
-        alert('Booking completed successfully!');
+        toast.success('Booking completed successfully!');
       } else if (status === 'Rejected') {
-        alert('Booking rejected successfully!');
+        toast.success('Booking rejected successfully!');
       }
     } catch (err) {
-      alert('Error updating status');
+      toast.error('Error updating status');
     }
   };
 
@@ -86,8 +87,9 @@ function Admin() {
       try {
         await deleteBooking(id);
         setBookings(bookings.filter((b) => b._id !== id));
+        toast.success('Booking deleted successfully');
       } catch (err) {
-        alert('Error deleting booking');
+        toast.error('Error deleting booking');
       }
     }
   };
@@ -98,8 +100,9 @@ function Admin() {
       try {
         await deleteService(id);
         setServices(services.filter((s) => s._id !== id));
+        toast.success('Service deleted successfully');
       } catch (err) {
-        alert('Error deleting service');
+        toast.error('Error deleting service');
       }
     }
   };
@@ -122,9 +125,9 @@ function Admin() {
         image: '',
       });
       setShowAddForm(false);
-      alert('Service added successfully');
+      toast.success('Service added successfully');
     } catch (err) {
-      alert('Error adding service');
+      toast.error('Error adding service');
     }
   };
 
